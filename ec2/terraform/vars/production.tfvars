@@ -1,0 +1,5 @@
+instance_type = "t3.medium"
+ssh_ip = "123.25.30.88/32"
+ami = "ami-001440bcc4ddffcf1"
+ssh_key_name = "mykey"
+domain_name="runtimedev.com"
