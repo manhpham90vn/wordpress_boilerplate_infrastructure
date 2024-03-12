@@ -18,6 +18,14 @@ sudo dnf install -y git
 # Install and config Nginx
 sudo dnf install -y nginx
 
+cat <<EOF | sudo tee /etc/nginx/conf.d/fullchain.pem
+${fullchain}
+EOF
+
+cat <<EOF | sudo tee /etc/nginx/conf.d/privkey.pem
+${privkey}
+EOF
+
 cat <<EOF | sudo tee /etc/nginx/conf.d/default.conf
 server {
   listen 80;
@@ -97,3 +105,6 @@ printf "\n" | sudo pecl install redis
 sudo sh -c "echo 'extension=redis.so' >> /etc/php.ini"
 sudo systemctl restart php-fpm
 sudo systemctl reload nginx
+
+# Test
+sudo sh -c "echo '<?php phpinfo();' >> $ROOT_HTML/info.php"

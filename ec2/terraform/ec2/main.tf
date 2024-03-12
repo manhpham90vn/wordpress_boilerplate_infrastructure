@@ -17,7 +17,7 @@ resource "aws_instance" "MyEC2InstancePublic" {
   }
 }
 
-resource "local_file" "config_hosts" {
+resource "local_file" "Configs" {
   content = templatefile("${path.root}/../scripts/install.tpl",
     {
       mysql_root_password = var.mysql_root_password
@@ -26,42 +26,22 @@ resource "local_file" "config_hosts" {
       mysql_db_name       = var.mysql_db_name
       ec2_domain          = var.domain_name
       ssh_ip              = var.ssh_ip
+      fullchain = file("${path.root}/../certificate/fullchain.pem")
+      privkey = file("${path.root}/../certificate/privkey.pem")
     }
   )
   filename = "${path.root}/../scripts/install.sh"
 }
 
-resource "null_resource" "Copy_file" {
+resource "null_resource" "Run_Install" {
 
   provisioner "file" {
     source      = "${path.root}/../scripts/install.sh"
     destination = "/tmp/install.sh"
   }
 
-  provisioner "file" {
-    source      = "${path.root}/../certificate/fullchain.pem"
-    destination = "/home/ec2-user/fullchain.pem"
-  }
-
-  provisioner "file" {
-    source      = "${path.root}/../certificate/privkey.pem"
-    destination = "/home/ec2-user/privkey.pem"
-  }
-
-  connection {
-    type        = "ssh"
-    user        = local.user
-    private_key = var.private_key
-    host        = aws_instance.MyEC2InstancePublic[0].public_ip
-  }
-}
-
-resource "null_resource" "Run_Install" {
-
   provisioner "remote-exec" {
     inline = [
-      "sudo mv /home/ec2-user/fullchain.pem /etc/nginx/conf.d/fullchain.pem",
-      "sudo mv /home/ec2-user/privkey.pem /etc/nginx/conf.d/privkey.pem",
       "chmod +x /tmp/install.sh",
       "sudo /tmp/install.sh"
     ]
@@ -74,5 +54,5 @@ resource "null_resource" "Run_Install" {
     host        = aws_instance.MyEC2InstancePublic[0].public_ip
   }
 
-  depends_on = [ null_resource.Copy_file ]
+  depends_on = [ local_file.Configs ]
 }

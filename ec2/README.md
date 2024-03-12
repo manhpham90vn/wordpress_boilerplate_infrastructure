@@ -1,9 +1,8 @@
 ## Deploy to ec2
 - File need to update
 ```shell
-./deployment/ec2/terraform/install.sh
-./deployment/ec2/terraform/vars/terraform.tfvars
-./deployment/ec2/terraform/vars/production.tfvars
+./ec2/terraform/vars/terraform.tfvars
+./ec2/terraform/vars/production.tfvars
 ```
 ### Terraform show changes
 ```shell
