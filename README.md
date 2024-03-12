@@ -2,7 +2,7 @@
 - cache with redis
 - cdn with cloudfront over s3
 - support https
-- auto deploy to aws with terraform (100%)
+- auto deploy infrastructure in to aws with terraform (100%)
 
 ## EC2
 - automatic install nginx, php-fpm, mariadb, redis via terraform
