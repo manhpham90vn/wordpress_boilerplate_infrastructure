@@ -76,6 +76,8 @@ DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';
 FLUSH PRIVILEGES;
 EOF
 sudo mysql < mysql_secure_installation.sql 
+rm -rf mysql_secure_installation.sql
+
 cat > installation.sql << EOF
 CREATE DATABASE $DB_NAME;
 CREATE USER '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASSWORD';
@@ -87,6 +89,7 @@ GRANT ALL PRIVILEGES ON $DB_NAME.* TO 'admin'@'$DOMAIN';
 FLUSH PRIVILEGES;
 EOF
 sudo mysql -uroot -p$ROOT_PASSWORD  < installation.sql
+rm -rf installation.sql
 
 # Update MariaDB config allow remote login
 sudo sed -i 's/#bind-address=0.0.0.0/bind-address=0.0.0.0/' /etc/my.cnf.d/mariadb-server.cnf

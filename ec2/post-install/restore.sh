@@ -1,2 +1,2 @@
 #!/bin/bash
-mysql -uadmin -padmin wordpress < ./development/database/backup.sql
+mysql -uadmin -padmin wordpress < ./database/backup.sql

@@ -61,7 +61,6 @@ module "acm" {
 module "s3" {
   source = "./s3"
   bucket_name = "runtimedev"
-  aws_iam_policy_document = module.iam.data.aws_iam_policy_document
 }
 
 module "cloudfront" {
@@ -70,12 +69,8 @@ module "cloudfront" {
   origin_domain_name = module.s3.data.bucket_regional_domain_name
   acm_certificate_arn = module.acm.data.arn
   s3_bucket = module.s3.data.s3_bucket_name
-}
-
-module "iam" {
-  source = "./iam"
-  s3_arn = module.s3.data.s3_arn
-  origin_access_identity_arn = module.cloudfront.data.origin_access_identity_arn
+  cloudfront_access_identity_path = module.s3.data.cloudfront_access_identity_path
+  depends_on = [ module.s3 ]
 }
 
 output "ec2" {

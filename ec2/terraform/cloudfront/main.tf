@@ -1,7 +1,3 @@
-resource "aws_cloudfront_origin_access_identity" "Coudfront_Origin_Access_Identity" {
-  comment = "S3-${var.s3_bucket}"
-}
-
 resource "aws_cloudfront_origin_access_control" "Origin_Access_Control" {
   name                              = "S3-${var.origin_domain_name}"
   origin_access_control_origin_type = "s3"
