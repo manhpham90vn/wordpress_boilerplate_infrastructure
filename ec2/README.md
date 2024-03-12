@@ -9,7 +9,7 @@
 terraform plan -var-file="vars/terraform.tfvars"
 ```
 
-### Terraform apply env production
+### Terraform apply env from file
 ```shell
 terraform apply -var-file="vars/terraform.tfvars" -auto-approve
 ```
