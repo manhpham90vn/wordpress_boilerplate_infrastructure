@@ -51,6 +51,9 @@ module "ec2" {
 module "route53" {
   source = "./route53"
   domain_name = var.domain_name
+  cdn_domain_name = "cdn.${var.domain_name}"
+  cloudfront_domain_name = module.cloudfront.data.cloudfront_domain_name
+  zone_id = module.cloudfront.data.zone_id
   public_ip = module.ec2.data.public_ip
 }
 
