@@ -8,6 +8,11 @@ variable "instance_type" {
   }
 }
 
+variable "db_instance_class" {
+  type = string
+  description = "Instance class of the RDS"
+}
+
 variable "ami" {
   type = string
   description = "AMI ID"
@@ -32,12 +37,6 @@ variable "domain_name" {
   default = ""
 }
 
-variable "mysql_root_password" {
-  type        = string
-  description = "Root password for MySQL"
-  default     = ""
-}
-
 variable "mysql_db_user" {
   type        = string
   description = "Database user"
@@ -50,8 +49,8 @@ variable "mysql_db_password" {
   default     = ""
 }
 
-variable "mysql_db_name" {
+variable "aim_for_autoscaling" {
   type        = string
-  description = "Database name"
+  description = "Aim for autoscaling"
   default     = ""
 }

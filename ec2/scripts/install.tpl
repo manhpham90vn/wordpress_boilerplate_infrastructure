@@ -110,4 +110,4 @@ sudo systemctl restart php-fpm
 sudo systemctl reload nginx
 
 # Test
-sudo sh -c "echo '<?php phpinfo();' >> $ROOT_HTML/info.php"
+sudo sh -c "echo '<?php echo gethostname(); phpinfo(); ?>' >> $ROOT_HTML/info.php"

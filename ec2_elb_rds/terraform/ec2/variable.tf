@@ -57,36 +57,6 @@ variable "private_security_group_id" {
   default = ""
 }
 
-variable "mysql_root_password" {
-  type        = string
-  description = "Root password for MySQL"
-  default     = ""
-}
-
-variable "mysql_db_user" {
-  type        = string
-  description = "Database user"
-  default     = ""
-}
-
-variable "mysql_db_password" {
-  type        = string
-  description = "Database password"
-  default     = ""
-}
-
-variable "mysql_db_name" {
-  type        = string
-  description = "Database name"
-  default     = ""
-}
-
-variable "ssh_ip" {
-  type        = string
-  description = "Ip address allowed to connect to the database"
-  default     = ""
-}
-
 variable "domain_name" {
   type        = string
   description = "Domain of the EC2"

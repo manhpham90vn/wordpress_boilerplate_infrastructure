@@ -191,10 +191,10 @@ resource "aws_security_group" "Private_Security_Group" {
       from_port        = 3306
       to_port          = 3306
       protocol         = "tcp"
-      cidr_blocks      = [aws_security_group.Public_Security_Group.id]
+      cidr_blocks      = []
       ipv6_cidr_blocks = []
       prefix_list_ids  = []
-      security_groups  = []
+      security_groups  = [aws_security_group.Public_Security_Group.id]
       self             = false
     }]
 
