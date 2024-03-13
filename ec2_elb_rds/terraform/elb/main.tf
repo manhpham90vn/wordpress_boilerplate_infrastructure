@@ -67,9 +67,7 @@ resource "aws_autoscaling_group" "Auto_Scaling_Group" {
 
   target_group_arns = [aws_lb_target_group.Load_Balancer_Target_Group.arn]
 
-  vpc_zone_identifier = [
-    var.subnets[0],
-  ]
+  vpc_zone_identifier = var.subnets
 
   launch_template {
     id      = aws_launch_template.Launch_Template.id
