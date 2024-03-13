@@ -13,7 +13,7 @@ REMOTE_IP_WITHOUT_MASK=echo $REMOTE_IP | cut -c -3
 sudo dnf update && sudo dnf upgrade -y
 
 # Install tool
-sudo dnf install -y git
+sudo dnf install -y git htop
 
 # Install and config Nginx
 sudo dnf install -y nginx

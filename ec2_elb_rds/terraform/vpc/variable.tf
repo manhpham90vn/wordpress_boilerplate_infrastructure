@@ -10,6 +10,12 @@ variable "public_subnet" {
   default = []
 }
 
+variable "private_subnet" {
+  type = list(string)
+  description = "value of the private subnet"
+  default = []
+}
+
 variable "availability_zone" {
   type = list(string)
   description = "value of the availability zone"

@@ -26,8 +26,8 @@ resource "local_file" "Configs" {
       mysql_db_name       = var.mysql_db_name
       ec2_domain          = var.domain_name
       ssh_ip              = var.ssh_ip
-      fullchain = file("${path.root}/../certificate/fullchain.pem")
-      privkey = file("${path.root}/../certificate/privkey.pem")
+      fullchain = file("${path.root}/../../certificate/fullchain.pem")
+      privkey = file("${path.root}/../../certificate/privkey.pem")
     }
   )
   filename = "${path.root}/../scripts/install.sh"

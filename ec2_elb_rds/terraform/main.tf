@@ -15,7 +15,7 @@ provider "aws" {
 data "aws_availability_zones" "Availability_Zones" {}
 
 locals {
-  azs = slice(data.aws_availability_zones.Availability_Zones.names, 0, 1)
+  azs = slice(data.aws_availability_zones.Availability_Zones.names, 0, 3)
   vpc_cidr = "10.0.0.0/16"
 }
 
@@ -27,6 +27,7 @@ module "ssh" {
 module "vpc" {
   source = "./vpc"
   cidr_block = local.vpc_cidr
+  private_subnet = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 4, k)]
   public_subnet  = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k + 48)]
   availability_zone = local.azs
   ssh_ip = var.ssh_ip
