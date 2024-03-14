@@ -3,9 +3,14 @@ variable "security_groups" {
   description = "List of security groups to associate with the load balancer"
 }
 
-variable "subnets" {
+variable "public_subnets" {
   type = list(string)
   description = "value of the subnets to associate with the load balancer"
+}
+
+variable "private_subnets" {
+  type = list(string)
+  description = "value of the subnets to associate with the ec2"
 }
 
 variable "vpc_id" {

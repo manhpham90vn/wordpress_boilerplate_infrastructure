@@ -9,6 +9,12 @@ sudo dnf update && sudo dnf upgrade -y
 # Install tool
 sudo dnf install -y git htop
 
+# Install MySQL Client
+sudo wget https://dev.mysql.com/get/mysql80-community-release-el9-1.noarch.rpm -P /tmp
+sudo dnf install /tmp/mysql80-community-release-el9-1.noarch.rpm -y
+sudo dnf update
+sudo dnf install mysql-community-server -y
+
 # Install and config Nginx
 sudo dnf install -y nginx
 

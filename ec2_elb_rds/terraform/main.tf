@@ -86,7 +86,8 @@ module "cloudfront" {
 module "elb" {
   source = "./elb"
   security_groups = [module.vpc.data.public_security_group_id]
-  subnets = module.vpc.data.public_subnet_id
+  public_subnets = module.vpc.data.public_subnet_id
+  private_subnets = module.vpc.data.private_subnet_id
   vpc_id = module.vpc.data.vpc_id
   certificate_arn = module.acm.data.arn
   aim_for_autoscaling = var.aim_for_autoscaling

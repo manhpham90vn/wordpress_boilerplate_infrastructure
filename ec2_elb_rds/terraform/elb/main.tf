@@ -9,7 +9,7 @@ resource "aws_lb" "Load_Balancer" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = var.security_groups
-  subnets            = var.subnets
+  subnets            = var.public_subnets
 }
 
 resource "aws_lb_target_group" "Load_Balancer_Target_Group" {
@@ -67,7 +67,7 @@ resource "aws_autoscaling_group" "Auto_Scaling_Group" {
 
   target_group_arns = [aws_lb_target_group.Load_Balancer_Target_Group.arn]
 
-  vpc_zone_identifier = var.subnets
+  vpc_zone_identifier = var.private_subnets
 
   launch_template {
     id      = aws_launch_template.Launch_Template.id
