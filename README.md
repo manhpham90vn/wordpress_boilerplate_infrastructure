@@ -16,6 +16,8 @@
 - load balancer and auto scaling
 - database with rds
 - auto backup database (snapshot) to s3 (todo)
+- use efs with auto scaling (todo)
+- fix access wp-admin [link](https://wordpress.stackexchange.com/questions/250240/setting-serverhttps-on-prevents-access-to-wp-admin)
 
 ## ECS
 
