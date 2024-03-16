@@ -4,6 +4,11 @@ locals {
   final_snapshot_identifier = "my-final-snapshot"
 }
 
+resource "aws_db_subnet_group" "DB_Subnet" {
+  name = local.db_subnet_group_name
+  subnet_ids = var.subnet_ids
+}
+
 resource "aws_db_instance" "DB" {
   allocated_storage = 10
   storage_type = "gp2"
@@ -22,9 +27,4 @@ resource "aws_db_instance" "DB" {
   maintenance_window = "Mon:04:00-Mon:04:30"
   multi_az = false
   publicly_accessible = false
-}
-
-resource "aws_db_subnet_group" "DB_Subnet" {
-  name = local.db_subnet_group_name
-  subnet_ids = var.subnet_ids
 }

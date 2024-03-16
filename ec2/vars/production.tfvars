@@ -1,7 +1,7 @@
 instance_type = "t3.medium"
 ami = "ami-001440bcc4ddffcf1"
 ssh_key_name = "mykey"
-ssh_ip = "123.25.30.88/32"
+ssh_ip = "113.22.84.80/32"
 domain_name = "runtimedev.com"
 mysql_root_password = "toor"
 mysql_db_user = "admin"

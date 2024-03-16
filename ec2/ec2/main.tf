@@ -18,18 +18,25 @@ resource "aws_instance" "MyEC2InstancePublic" {
 }
 
 resource "local_file" "Configs" {
-  content = templatefile("${path.root}/../scripts/install.tpl",
+  content = templatefile("${path.root}/scripts/install.tpl",
     {
+      mysql_root_password = var.mysql_root_password
+      mysql_db_user       = var.mysql_db_user
+      mysql_db_password   = var.mysql_db_password
+      mysql_db_name       = var.mysql_db_name
       ec2_domain          = var.domain_name
+      ssh_ip              = var.ssh_ip
+      fullchain = file("${path.root}/../certificate/fullchain.pem")
+      privkey = file("${path.root}/../certificate/privkey.pem")
     }
   )
-  filename = "${path.root}/../scripts/install.sh"
+  filename = "${path.root}/scripts/install.sh"
 }
 
 resource "null_resource" "Run_Install" {
 
   provisioner "file" {
-    source      = "${path.root}/../scripts/install.sh"
+    source      = "${path.root}/scripts/install.sh"
     destination = "/tmp/install.sh"
   }
 

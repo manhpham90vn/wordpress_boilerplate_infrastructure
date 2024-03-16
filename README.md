@@ -15,10 +15,25 @@
 - [x] automatic install nginx, php-fpm, redis
 - [x] load balancer and auto scaling
 - [x] database with rds
-- [ ] auto backup database (snapshot) to s3
 - [ ] use efs with auto scaling
 - [x] fix access wp-admin [link](https://wordpress.stackexchange.com/questions/250240/setting-serverhttps-on-prevents-access-to-wp-admin)
 
 ## ECS
 
 ## EKS
+
+## Command
+### Terraform show changes
+```shell
+terraform plan -var-file="vars/terraform.tfvars"
+```
+
+### Terraform apply env from file
+```shell
+terraform apply -var-file="vars/terraform.tfvars" -auto-approve
+```
+
+### Terraform destroy
+```shell
+terraform destroy -var-file="vars/terraform.tfvars" -auto-approve
+```

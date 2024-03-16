@@ -10,7 +10,7 @@ PHP=php8.2
 REMOTE_IP_WITHOUT_MASK=echo $REMOTE_IP | cut -c -3
 
 # Update
-sudo dnf update && sudo dnf upgrade -y
+sudo dnf update -y && sudo dnf upgrade -y
 
 # Install tool
 sudo dnf install -y git htop
@@ -62,7 +62,7 @@ sudo systemctl enable nginx
 sudo systemctl start nginx
 
 # Install and config MariaDB
-sudo dnf install mariadb105-server -y
+sudo dnf install -y mariadb105-server
 sudo systemctl enable mariadb
 sudo systemctl start mariadb
 
