@@ -1,9 +1,14 @@
 locals {
+  ecr_repository_name        = "app-repo"
   ecs_cluster_name           = "my-ecs-cluster"
   ecs_capacity_provider_name = "my-ecs-capacity-provider"
   ecs_task_definition_name   = "my-ecs-task-definition"
   ecs_service_name           = "my-ecs-service"
   container_name             = "my-container"
+}
+
+resource "aws_ecr_repository" "Ecr_Repository" {
+  name = local.ecr_repository_name
 }
 
 resource "aws_ecs_cluster" "ECS_Cluster" {
@@ -41,7 +46,7 @@ resource "aws_ecs_task_definition" "ECS_Task_Definition" {
   container_definitions = jsonencode([
     {
       name      = local.container_name
-      image     = var.image_id
+      image     = "${aws_ecr_repository.Ecr_Repository.repository_url}:latest"
       cpu       = 256
       memory    = 512
       essential = true
@@ -86,6 +91,7 @@ resource "aws_ecs_task_definition" "ECS_Task_Definition" {
 
 resource "aws_ecs_service" "ECS_Service" {
   name            = local.ecs_service_name
+  iam_role = var.aim_role
   cluster         = aws_ecs_cluster.ECS_Cluster.id
   task_definition = aws_ecs_task_definition.ECS_Task_Definition.arn
   desired_count   = 2
@@ -111,7 +117,7 @@ resource "aws_ecs_service" "ECS_Service" {
 
   load_balancer {
     target_group_arn = var.target_group_arn
-    container_name   = local.container_name
+    container_name   = "nginx"
     container_port   = 80
   }
 }

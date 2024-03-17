@@ -22,8 +22,8 @@ variable "target_group_arn" {
   default = ""
 }
 
-variable "image_id" {
-  description = "value of the image id"
+variable "aim_role" {
+  description = "value of the aim role"
   type = string
   default = ""
 }

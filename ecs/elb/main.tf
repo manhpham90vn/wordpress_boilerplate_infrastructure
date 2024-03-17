@@ -4,6 +4,34 @@ locals {
   instance_name     = "my-instance"
 }
 
+data "aws_iam_policy_document" "Iam_Policy_Document" {
+  statement {
+    actions = ["sts:AssumeRole"]
+    effect  = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = [
+        "ec2.amazonaws.com",
+        "ecs.amazonaws.com"
+      ]
+    }
+  }
+}
+
+resource "aws_iam_role" "Iam_Role" {
+  assume_role_policy = data.aws_iam_policy_document.Iam_Policy_Document.json
+}
+
+resource "aws_iam_role_policy_attachment" "Iam_Role_Policy_attachment" {
+  role       = aws_iam_role.Iam_Role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
+}
+
+resource "aws_iam_instance_profile" "Iam_Instance_Profile" {
+  role  = aws_iam_role.Iam_Role.id
+}
+
 resource "aws_lb" "Load_Balancer" {
   name               = local.lb_name
   internal           = false
@@ -30,44 +58,12 @@ resource "aws_lb_listener" "Load_Balancer_Listener_HTTP" {
   }
 }
 
-resource "aws_iam_instance_profile" "Iam_Instance_Profile" {
-  role = aws_iam_role.Iam_role.name
-}
-
-resource "aws_iam_role" "Iam_role" {
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      },
-      "Effect": "Allow",
-      "Sid": ""
-    }
-  ]
-}
-EOF
-}
-
-resource "aws_iam_role_policy_attachment" "Iam_Role_Policy_Attachment_1" {
-  role       = aws_iam_role.Iam_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
-}
-
-resource "aws_iam_role_policy_attachment" "Iam_Role_Policy_Attachment_2" {
-  role       = aws_iam_role.Iam_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
-}
-
 resource "aws_launch_template" "Launch_Template" {
   image_id      = var.aim_for_autoscaling
   instance_type = var.instance_type
 
   iam_instance_profile {
-    name = aws_iam_instance_profile.Iam_Instance_Profile.name
+    arn = aws_iam_instance_profile.Iam_Instance_Profile.arn
   }
 
   network_interfaces {

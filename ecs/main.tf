@@ -100,7 +100,6 @@ module "ecs" {
   subnets = module.vpc.data.private_subnet_id
   security_groups = [ module.vpc.data.public_security_group_id ]
   target_group_arn = module.elb.data.target_group_arn
-  image_id = var.image_id
 }
 
 output "ec2" {

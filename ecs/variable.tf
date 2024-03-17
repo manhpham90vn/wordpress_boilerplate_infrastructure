@@ -49,12 +49,6 @@ variable "mysql_db_password" {
   default     = ""
 }
 
-variable "image_id" {
-  description = "value of the image id"
-  type = string
-  default = ""
-}
-
 variable "aim_for_autoscaling" {
   type        = string
   description = "Aim for autoscaling"
