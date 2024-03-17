@@ -10,7 +10,7 @@ data "aws_iam_policy_document" "Iam_Policy_Document" {
     effect  = "Allow"
 
     principals {
-      type        = "Service"
+      type = "Service"
       identifiers = [
         "ec2.amazonaws.com",
         "ecs.amazonaws.com"
@@ -29,15 +29,14 @@ resource "aws_iam_role_policy_attachment" "Iam_Role_Policy_attachment" {
 }
 
 resource "aws_iam_instance_profile" "Iam_Instance_Profile" {
-  role  = aws_iam_role.Iam_Role.id
+  role = aws_iam_role.Iam_Role.id
 }
 
 resource "aws_lb" "Load_Balancer" {
-  name               = local.lb_name
-  internal           = false
-  load_balancer_type = "application"
-  security_groups    = var.security_groups
-  subnets            = var.public_subnets
+  name            = local.lb_name
+  internal        = false
+  security_groups = var.security_groups
+  subnets         = var.public_subnets
 }
 
 resource "aws_lb_target_group" "Load_Balancer_Target_Group" {
@@ -69,13 +68,6 @@ resource "aws_launch_template" "Launch_Template" {
   network_interfaces {
     associate_public_ip_address = false
     security_groups             = var.security_groups
-  }
-
-  tag_specifications {
-    resource_type = "instance"
-    tags = {
-      Name = local.instance_name
-    }
   }
 }
 

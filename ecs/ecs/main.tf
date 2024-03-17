@@ -102,18 +102,6 @@ resource "aws_ecs_service" "ECS_Service" {
   }
 
   force_new_deployment = true
-  placement_constraints {
-    type = "distinctInstance"
-  }
-
-  triggers = {
-    redeployment = timestamp()
-  }
-
-  capacity_provider_strategy {
-    capacity_provider = aws_ecs_capacity_provider.ECS_Capacity_Provider.name
-    weight            = 100
-  }
 
   load_balancer {
     target_group_arn = var.target_group_arn
