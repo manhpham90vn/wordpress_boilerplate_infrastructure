@@ -4,12 +4,6 @@ variable "countInstancesPublic" {
   default     = 1
 }
 
-variable "ami" {
-  type = string
-  description = "AMI of the EC2"
-  default = ""
-}
-
 variable "instance_type" {
   type = string
   description = "Type of instance"

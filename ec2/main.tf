@@ -1,9 +1,9 @@
 terraform {
-  required_version = "=1.7.4"
+  required_version = ">=1.7.4"
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "=5.35.0"
+      version = ">=5.35.0"
     }
   }
 }
@@ -34,7 +34,6 @@ module "vpc" {
 
 module "ec2" {
   source = "./ec2"
-  ami = var.ami
   instance_type = var.instance_type
   key_name = module.ssh.data.key_name
   public_subnet_id = module.vpc.data.public_subnet_id

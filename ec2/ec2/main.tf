@@ -3,9 +3,30 @@ locals {
   name = "MyEC2Instance"
 }
 
+data "aws_ami" "Ami" {
+  most_recent      = true
+  owners           = ["amazon"]
+ 
+  filter {
+    name   = "name"
+    values = ["al2023-ami-2023.*-x86_64"]
+  }
+ 
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+ 
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+ 
+}
+
 resource "aws_instance" "MyEC2InstancePublic" {
   count                       = var.countInstancesPublic
-  ami                         = var.ami
+  ami                         = data.aws_ami.Ami.id
   instance_type               = var.instance_type
   key_name                    = var.key_name
   subnet_id                   = var.public_subnet_id[count.index]
