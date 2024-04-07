@@ -1,5 +1,4 @@
 instance_type = "t2.micro"
-ami = "ami-001440bcc4ddffcf1"
 ssh_key_name = "mykey"
 ssh_ip = "113.22.84.80/32"
 domain_name = "runtimedev.com"
