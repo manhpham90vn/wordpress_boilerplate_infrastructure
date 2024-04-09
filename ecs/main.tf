@@ -1,5 +1,5 @@
 terraform {
-  required_version = "=1.7.4"
+  required_version = ">=1.7.4"
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -33,16 +33,15 @@ module "vpc" {
   ssh_ip = var.ssh_ip
 }
 
-# module "ec2" {
-#   source = "./ec2"
-#   ami = var.ami
-#   instance_type = var.instance_type
-#   key_name = module.ssh.data.key_name
-#   public_subnet_id = module.vpc.data.public_subnet_id
-#   public_security_group_id = module.vpc.data.public_security_group_id
-#   private_key = module.ssh.data.private_key
-#   domain_name = var.domain_name
-# }
+module "ec2" {
+  source = "./ec2"
+  instance_type = var.instance_type
+  key_name = module.ssh.data.key_name
+  public_subnet_id = module.vpc.data.public_subnet_id
+  public_security_group_id = module.vpc.data.public_security_group_id
+  private_key = module.ssh.data.private_key
+  domain_name = var.domain_name
+}
 
 # module "rds" {
 #   source = "./rds"
@@ -64,14 +63,14 @@ module "vpc" {
 #   public_ip = module.ec2.data.public_ip
 # }
 
-module "acm" {
-  source = "./acm"
-}
+# module "acm" {
+#   source = "./acm"
+# }
 
-module "s3" {
-  source = "./s3"
-  bucket_name = "runtimedev"
-}
+# module "s3" {
+#   source = "./s3"
+#   bucket_name = "runtimedev"
+# }
 
 # module "cloudfront" {
 #   source = "./cloudfront"
@@ -83,24 +82,24 @@ module "s3" {
 #   depends_on = [ module.s3 ]
 # }
 
-module "elb" {
-  source = "./elb"
-  security_groups = [module.vpc.data.public_security_group_id]
-  public_subnets = module.vpc.data.public_subnet_id
-  private_subnets = module.vpc.data.private_subnet_id
-  vpc_id = module.vpc.data.vpc_id
-  certificate_arn = module.acm.data.arn
-  instance_type = var.instance_type
-  aim_for_autoscaling = var.aim_for_autoscaling
-}
+# module "elb" {
+#   source = "./elb"
+#   security_groups = [module.vpc.data.public_security_group_id]
+#   public_subnets = module.vpc.data.public_subnet_id
+#   private_subnets = module.vpc.data.private_subnet_id
+#   vpc_id = module.vpc.data.vpc_id
+#   certificate_arn = module.acm.data.arn
+#   instance_type = var.instance_type
+#   aim_for_autoscaling = var.aim_for_autoscaling
+# }
 
-module "ecs" {
-  source = "./ecs"
-  auto_scaling_group_arn = module.elb.data.auto_scaling_group_arn
-  subnets = module.vpc.data.private_subnet_id
-  security_groups = [ module.vpc.data.public_security_group_id ]
-  target_group_arn = module.elb.data.target_group_arn
-}
+# module "ecs" {
+#   source = "./ecs"
+#   auto_scaling_group_arn = module.elb.data.auto_scaling_group_arn
+#   subnets = module.vpc.data.private_subnet_id
+#   security_groups = [ module.vpc.data.public_security_group_id ]
+#   target_group_arn = module.elb.data.target_group_arn
+# }
 
 output "ec2" {
   value = {
