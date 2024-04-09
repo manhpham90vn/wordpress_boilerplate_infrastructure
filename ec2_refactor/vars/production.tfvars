@@ -1,0 +1,8 @@
+ssh_ip = "113.22.84.80/32"
+instance_type = "t2.micro"
+ssh_key_name = "mykey"
+mysql_root_password = "toor"
+mysql_db_user = "admin"
+mysql_db_password = "admin"
+mysql_db_name = "wordpress"
+domain_name = "runtimedev.com"
